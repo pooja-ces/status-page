@@ -1,0 +1,90 @@
+{
+    "external_service": [
+        "AWS CloudFront",
+        "AWS EC2",
+        "AWS Route 53",
+        "AWS S3",
+        "DigitalOcean",
+        "Digital",
+        "New Relic",
+        "PagarDuty",
+        "pingdom",
+        "Postmark",
+        "Slack",
+        "Stripe",
+        "Twitter",
+        "YubiCloud"
+    ],
+    "metrics": {
+        "metrics_time": [
+            "Today",
+            "Week",
+            "Month"
+        ],
+        "metrics_chart": [
+            {
+                "title": "Hosted Status Pages Response Time",
+                "average": "100%",
+                "time": "Today",
+                "category": [
+                    "06 AM",
+                    "09 AM",
+                    "12 PM",
+                    "03 PM",
+                    "06 PM",
+                    "09 PM",
+                    "11 PM",
+                    "03 AM"
+                ],
+                "data": [
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+                ]
+            },
+            {
+                "title": "Hosted Status Pages Response Time",
+                "average": "368.12ms",
+                "time": "Today",
+                "data": [
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+                ]
+            },
+            {
+                "title": "API Response Time",
+                "average": "661.64ms",
+                "time": "Today",
+                "data": [
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+                ]
+            }
+        ]
+    }
+}
