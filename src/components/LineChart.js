@@ -18,6 +18,7 @@ const LineChart = ({
         },
         xAxis: {
             categories: categories,
+            gridLineColor: "#000",
             labels: {
                 style: {
                     color: "#999", // Set x-axis label color
