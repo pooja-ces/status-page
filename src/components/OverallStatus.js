@@ -1,13 +1,16 @@
 
+"use client"
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { fetchApiStatus } from '../lib/api';
-import { FaCheck } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
 import status_page from "../../public/status_page.json"
+import { fetchApiStatus } from '../lib/api';
 import LineChart from './LineChart';
 import services from "../../public/services.json"
 import Logo from "../../public/images/logo.png"
-import Image from 'next/image';
+import { FaCheck } from 'react-icons/fa';
+import SubScribeDialog from './SubScribeDialog';
 const VectorMap = dynamic(
     async () => {
         const { VectorMap } = await import('@react-jvectormap/core');
@@ -17,6 +20,7 @@ const VectorMap = dynamic(
     { ssr: false }
 );
 const OverallStatus = () => {
+    const router = useRouter()
     const [apiStatuses, setApiStatuses] = useState([
         { name: 'API 1', status: null },
         { name: 'API 2', status: null },
@@ -33,9 +37,10 @@ const OverallStatus = () => {
 
 
     useEffect(() => {
-        const fetchStatuses = async () => {
-            const statuses = await Promise.all(apiStatuses.map(api => fetchApiStatus(api.name)));
-            setApiStatuses(apiStatuses.map((api, index) => ({ ...api, status: statuses[index] })));
+        const fetchStatuses = async (apiName) => {
+            const response = await fetch(`/api/status?name=${apiName}`);
+            const data = await response.json();
+            return data.status;
         };
 
         fetchStatuses();
@@ -64,10 +69,7 @@ const OverallStatus = () => {
             <div className="flex justify-between mb-5">
                 <Image src={Logo} height={150} width={300} style={{ maxWidth: "300px", maxHeight: "150px" }} />
                 <div>
-
-                    <div className='bg-white text-black px-[10px] py-[10px] rounded'>
-                        <p className='text-sm'>SUBSCRIBE</p>
-                    </div>
+                    <SubScribeDialog />
                 </div>
             </div>
             <div className='pb-7'>
@@ -226,7 +228,7 @@ const OverallStatus = () => {
                 <div className='mt-12'>
                     <h3 className='text-xl opacity-60 mb-3'>Scheduled Maintenance</h3>
                     <div className=' border-[#414142] border rounded-lg'>
-                        <div className='bg-[#00AAF0] rounded-t-lg rounded-r-lg rounded-b-none'>
+                        <div className='bg-[#00AAF0] rounded-t-lg rounded-t-r-lg rounded-b-none'>
                             <div className='flex justify-between items-center p-4'>
                                 <p className='text-white text-base'>Deploy Version 1.7.3</p>
                                 <p className='opacity-70 text-white'>Planned Maintenance</p>
@@ -260,9 +262,7 @@ const OverallStatus = () => {
                     <div className=' border-[#414142] border rounded'>
                         <div className='p-4'>
                             <div className='flex justify-center items-center'>
-                                <div className='bg-white text-black px-[10px] py-[10px] rounded'>
-                                    <p className='text-sm'>SUBSCRIBE</p>
-                                </div>
+                                <SubScribeDialog />
                             </div>
                         </div>
                     </div>
@@ -272,7 +272,7 @@ const OverallStatus = () => {
                         <div>
                             <ul className='flex items-center gap-3'>
                                 <li className='text-[#dbd9d9] decoration-0 no-underline'>Status</li>
-                                <li className='text-[#dbd9d9] decoration-0 no-underline'>History</li>
+                                <li className='text-[#dbd9d9] decoration-0 no-underline' onClick={() => router.push("/history")}>History</li>
                                 <li className='text-[#dbd9d9] decoration-0 no-underline'>Report issue</li>
                             </ul>
                         </div>
