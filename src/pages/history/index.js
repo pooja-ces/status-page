@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import Logo from "../../../public/images/logo.png"
 import SubScribeDialog from '@/components/SubScribeDialog'
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const HistoryPage = () => {
+    const router = useRouter()
     const [visibleEvent, setVisibleEvent] = useState(null);
 
     const events = [
@@ -28,8 +30,7 @@ const HistoryPage = () => {
 
 
     return (
-        <div className=''>
-            <div className='container mx-auto text-white pt-8'>
+            <div className='container px-5 md:mx-auto text-white pt-8'>
                 <div className="flex justify-between mb-5">
                     <Image src={Logo} height={150} width={300} style={{ maxWidth: "300px", maxHeight: "150px" }} />
                     <div>
@@ -45,7 +46,7 @@ const HistoryPage = () => {
                     </div>
                 </div>
                 <div className="">
-                    <button className='flex items-center justify-center text-[#dbd9d9]'>
+                    <button className='flex items-center justify-center text-[#dbd9d9]' onClick={() => router.back()}>
                         <FaArrowLeft />
                         <b className='ml-2'>Back to current status</b>
                     </button>
@@ -141,7 +142,6 @@ const HistoryPage = () => {
                     ))}
                 </div>
             </div>
-        </div>
     )
 }
 
