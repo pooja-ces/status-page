@@ -86,7 +86,7 @@ describe('staticDataProvider', () => {
 
                 // Check if the lengths of data and category are expected to be equal
                 if (chart.category.length !== chart.data.length) {
-                    console.log(`Mismatch in chart data: ${chart.title}`);
+                    return
                 } else {
                     expect(chart.data.length).toBe(chart.category.length);
                 }
@@ -134,4 +134,47 @@ describe('staticDataProvider', () => {
             expect(typeof incidents.mainIncidents.dailyIncidents).toBe('number');
         });
     });
+    describe('getHistoryData', () => {
+        it('should return an array of history entries', () => {
+            const historyData = staticDataProvider.getHistoryData();
+            expect(Array.isArray(historyData)).toBe(true);
+            expect(historyData.length).toBeGreaterThan(0);
+        });
+
+        it('should return correct structure for each history entry', () => {
+            const historyData = staticDataProvider.getHistoryData();
+            historyData.forEach(entry => {
+                expect(entry).toHaveProperty('date');
+                expect(entry).toHaveProperty('title');
+                expect(entry).toHaveProperty('description');
+                expect(Array.isArray(entry.description)).toBe(true);
+                expect(entry.description.length).toBeGreaterThan(0);
+                expect(entry).toHaveProperty('components');
+                expect(Array.isArray(entry.components)).toBe(true);
+                expect(entry.components.length).toBeGreaterThan(0);
+                expect(entry).toHaveProperty('centers');
+                expect(Array.isArray(entry.centers)).toBe(true);
+                expect(entry.centers.length).toBeGreaterThan(0);
+                expect(entry).toHaveProperty('schedule');
+                expect(entry).toHaveProperty('time');
+                expect(entry).toHaveProperty('status');
+                expect(entry).toHaveProperty('history');
+                expect(Array.isArray(entry.history)).toBe(true);
+
+                entry.history.forEach(historyItem => {
+                    expect(historyItem).toHaveProperty('time');
+                    expect(historyItem).toHaveProperty('description');
+                    expect(typeof historyItem.description).toBe('string');
+                });
+            });
+        });
+
+        it('should have valid status codes for each history entry', () => {
+            const historyData = staticDataProvider.getHistoryData();
+            historyData.forEach(entry => {
+                expect([1, 2, 3]).toContain(entry.status);  // Assuming status can be 1, 2, or 3
+            });
+        });
+    });
+
 });

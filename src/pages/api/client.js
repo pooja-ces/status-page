@@ -18,6 +18,7 @@ export const DataProvider = ({ children }) => {
         chartData: undefined,
         versionData: undefined,
         incidentsData: undefined,
+        historyData: undefined,
     });
 
     useEffect(() => {
@@ -30,7 +31,8 @@ export const DataProvider = ({ children }) => {
                     metrics: await api.getMetrics(),
                     chartData: await api.getChartData(),
                     versionData: await api.getVersion(),
-                    incidentsData: await api.getIncidents()
+                    incidentsData: await api.getIncidents(),
+                    historyData: await api.getHistoryData(),
                 });
             } else {
                 console.error("API client methods are undefined.");
